@@ -5,7 +5,7 @@ from django.db.models import Q
 
 # Part 2
 #################################################################
-def student_list_(request):
+"""def student_list_(request):
 
     posts = Student.objects.all()
 
@@ -29,4 +29,16 @@ def student_list(request):
     print(posts)
     print(connection.queries)
 
-    return render(request, 'output.html',{'posts':posts})
+    return render(request, 'output.html',{'posts':posts})"""
+
+def student_list(request):
+    posts = Student.objects.filter(firstname__startswith="raq")
+    print(posts.query)
+    return render(
+        request,
+        "output.html",
+        {
+            "posts": posts,
+            "sql_query": posts.query
+        }
+    )
