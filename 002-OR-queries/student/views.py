@@ -32,7 +32,7 @@ def student_list(request):
     return render(request, 'output.html',{'posts':posts})"""
 
 def student_list(request):
-    posts = Student.objects.filter(firstname__startswith="raq")
+    posts = Student.objects.filter(firstname__startswith="raq") | Student.objects.filter(surname__startswith="austin")
     print(posts.query)
     return render(
         request,
