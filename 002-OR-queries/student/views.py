@@ -58,7 +58,6 @@ def student_list(request):
             "sql_query": posts.query
         }
     )
-"""
 
 # AND query
 def student_list(request):
@@ -72,3 +71,17 @@ def student_list(request):
             "sql_query": posts.query
         }
     )    
+"""
+
+# Exclude query using AND
+def student_list(request):
+    posts = Student.objects.exclude(Q(firstname__startswith="raq") & Q(surname__startswith="avery"))
+    print(posts, connection.queries)
+    return render(
+        request,
+        "output.html",
+        {
+            "posts": posts,
+            "sql_query": posts.query
+        }
+    )            
