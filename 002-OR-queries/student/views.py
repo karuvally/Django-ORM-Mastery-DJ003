@@ -5,7 +5,8 @@ from django.db.models import Q
 
 # Part 2
 #################################################################
-"""def student_list_(request):
+"""
+def student_list_(request):
 
     posts = Student.objects.all()
 
@@ -31,6 +32,7 @@ def student_list(request):
 
     return render(request, 'output.html',{'posts':posts})
 
+# OR query
 def student_list(request):
     posts = Student.objects.filter(firstname__startswith="raq") | Student.objects.filter(surname__startswith="austin")
     print(posts.query)
@@ -41,8 +43,9 @@ def student_list(request):
             "posts": posts,
             "sql_query": posts.query
         }
-    )"""
+    )
 
+# OR query with QObjects
 def student_list(request):
     # Select students whose firstname starts with "raq" and lastname does not start with "austin"
     posts = Student.objects.filter(Q(firstname__startswith="raq") | ~Q(surname__startswith="austin"))
@@ -55,3 +58,17 @@ def student_list(request):
             "sql_query": posts.query
         }
     )
+"""
+
+# AND query
+def student_list(request):
+    posts = Student.objects.filter(Q(firstname__startswith="raq") & Q(surname__startswith="avery"))
+    print(posts, connection.queries)
+    return render(
+        request,
+        "output.html",
+        {
+            "posts": posts,
+            "sql_query": posts.query
+        }
+    )    
