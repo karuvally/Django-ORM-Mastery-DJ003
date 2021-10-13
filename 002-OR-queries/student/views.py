@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Student
 from django.db import connection
 from django.db.models import Q
+from pprint import pprint
 
 # Part 2
 #################################################################
@@ -71,7 +72,6 @@ def student_list(request):
             "sql_query": posts.query
         }
     )    
-"""
 
 # Exclude query using AND
 def student_list(request):
@@ -85,3 +85,17 @@ def student_list(request):
             "sql_query": posts.query
         }
     )            
+"""
+
+# Find students with age 20 or 21
+def student_list(request):
+    posts = Student.objects.filter(Q(age=20) | Q(age=21))
+    pprint(f"Posts: {posts}\n Query: {connection.queries}")
+    return render(
+        request,
+        "output.html",
+        {
+            "posts": posts,
+            "sql_query": posts.query           
+        }
+    )
